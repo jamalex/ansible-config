@@ -1,0 +1,36 @@
+---
+
+- name: Download Google signing key.
+  shell: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+
+- name: Add Google PPA.
+  shell: sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list'
+
+- name: Download Spotify signing key.
+  shell: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 94558F59
+
+- name: Add Spotify PPA.
+  shell: sh -c 'echo "deb http://repository.spotify.com stable non-free" > /etc/apt/sources.list.d/spotify.list'
+
+- name: Install basic packages.
+  apt: 'pkg="{{ item }}" state=installed update-cache=yes'
+  with_items: basic_packages
+
+- name: Add PPAs.
+  apt_repository: 'repo="{{ item }}"'
+  with_items: ppas
+
+- name: Install extra packages.
+  apt: 'pkg="{{ item }}" state=installed'
+  with_items: extra_packages
+
+- name: Install Python packages.
+  pip: name={{ item }}
+  with_items: python_packages
+  when: python_packages is defined
+
+- name: Enable virtualenv shortcuts.
+  lineinfile: "dest=~/.bashrc state=present regexp='^. /usr/local/bin/virtualenvwrapper.sh' line='. /usr/local/bin/virtualenvwrapper.sh'"
+
+- name: Set local SSH config file.
+  template: src=ssh_config.j2 dest=~/.ssh/config

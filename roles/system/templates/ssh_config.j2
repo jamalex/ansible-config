@@ -1,0 +1,6 @@
+{% for host in rackspace_hosts %}
+Host {{ host }}
+    HostName {{ host }}.learningequality.org
+    Port 4242
+
+{% endfor %}
