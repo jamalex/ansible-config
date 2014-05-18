@@ -3,8 +3,8 @@
 - name: Download Google signing key.
   shell: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 
-- name: Add Google PPA.
-  shell: sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list'
+# - name: Add Google PPA.
+#   shell: sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list'
 
 - name: Download Spotify signing key.
   shell: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 94558F59

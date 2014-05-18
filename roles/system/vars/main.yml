@@ -9,8 +9,10 @@ basic_packages:
   - python-dev
   - ubuntu-standard
   - unzip
+
 ppas:
   - "ppa:webupd8team/sublime-text-2"
+
 extra_packages:
   - firefox
   - sublime-text
@@ -36,6 +38,12 @@ extra_packages:
   - python-tk
   - python-xlib
   - wireshark
+  - file-roller
+  - vlc
+  - ubuntu-restricted-extras
+  - ttf-ubuntu-font-family
+  - synaptic
+
 python_packages:
   - virtualenv
   - virtualenvwrapper
