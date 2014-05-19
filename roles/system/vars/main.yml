@@ -23,7 +23,7 @@ extra_packages:
   - gnome-panel
   - transmission
   - compizconfig-settings-manager
-  - software-center
+  # - software-center # added annoying keyring
   - spotify-client
   - ipython
   - compiz-plugins

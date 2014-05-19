@@ -2,15 +2,15 @@
 
 - name: Download Google signing key.
   shell: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-
-# - name: Add Google PPA.
-#   shell: sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list'
+  changed_when: no
 
 - name: Download Spotify signing key.
   shell: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 94558F59
+  changed_when: no
 
 - name: Add Spotify PPA.
   shell: sh -c 'echo "deb http://repository.spotify.com stable non-free" > /etc/apt/sources.list.d/spotify.list'
+  changed_when: no
 
 - name: Install basic packages.
   apt: 'pkg="{{ item }}" state=installed update-cache=yes'
@@ -34,3 +34,24 @@
 
 - name: Set local SSH config file.
   template: src=ssh_config.j2 dest=~/.ssh/config
+
+- name: Install custom xkb mapping file (based on Crouton's keyboard target which must be installed first).
+  copy: src=xkb-symbols-chromebook dest=/usr/share/X11/xkb/symbols/chromebook
+  notify: clear xkb cache
+
+- name: Get the current directory.
+  shell: pwd
+  register: pwd
+  changed_when: no
+  tags:
+    - settings
+
+- name: Link our settings files (the ones headed for our home directory)
+  file: path=~/{{ item }} src={{ pwd.stdout }}/settings/{{ item }} state=link force=yes
+  sudo: yes
+  sudo_user: jamalex
+  with_items:
+    - .bashrc
+    - .bash_aliases
+  tags:
+    - settings
