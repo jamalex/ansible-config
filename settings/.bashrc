@@ -114,3 +114,5 @@ if ! shopt -oq posix; then
 fi
 
 . /usr/local/bin/virtualenvwrapper.sh
+
+PATH=$PATH:~/dev/snippets/git-commands

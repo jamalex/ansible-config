@@ -55,3 +55,11 @@
     - .bash_aliases
   tags:
     - settings
+
+- name: Create the ~/dev directory.
+  file: dest=~/dev owner=jamalex state=directory
+
+- name: Clone the snippets repo.
+  git: repo=git@github.com:fle-internal/snippets.git dest=~/dev/snippets accept_hostkey=yes
+  sudo: yes
+  sudo_user: jamalex
