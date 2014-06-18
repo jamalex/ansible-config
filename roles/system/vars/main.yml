@@ -12,8 +12,11 @@ basic_packages:
 
 ppas:
   - "ppa:webupd8team/sublime-text-2"
+  - "ppa:tycho-s/ppa"
 
 extra_packages:
+  - dropbox
+  - qtile
   - firefox
   - sublime-text
   - libreoffice
@@ -26,7 +29,7 @@ extra_packages:
   # - software-center # added annoying keyring
   - spotify-client
   - ipython
-  - compiz-plugins
+  # - compiz-plugins
   - git
   - git-gui
   - icedtea-7-plugin
@@ -62,3 +65,87 @@ rackspace_hosts:
   - troy
 
 accept_hostkey: yes
+
+fle_projects:
+
+  - name: ka-lite
+    directory: ka-lite
+    upstream: learningequality
+    remotes:
+      - aronasorman
+      - dylanjbarth
+      - rtibbles
+    folder_exclude_patterns:
+      - kalite/static
+
+  - name: ka-lite
+    directory: ka-lite-test
+    upstream: learningequality
+    remotes:
+      - aronasorman
+      - dylanjbarth
+      - rtibbles
+    folder_exclude_patterns:
+      - kalite/static
+
+  - name: ka-lite
+    directory: ka-lite-clean
+    upstream: learningequality
+    remotes:
+      - aronasorman
+      - dylanjbarth
+      - rtibbles
+    folder_exclude_patterns:
+      - kalite/static
+
+  - name: ka-lite-central
+    directory: ka-lite-central
+    upstream: fle-internal
+    remotes:
+      - aronasorman
+      - dylanjbarth
+      - rtibbles
+
+  - name: ka-lite-hotspot
+    directory: ka-lite-hotspot
+    upstream: learningequality
+    remotes: []
+
+  - name: 3G-link
+    directory: 3G-link
+    upstream: learningequality
+    remotes: []
+
+  - name: khan-exercises
+    directory: khan-exercises
+    upstream: learningequality
+    remotes: []
+
+  - name: ka-lite-installer-android
+    directory: ka-lite-installer-android
+    upstream: learningequality
+    remotes:
+      - b3b
+
+  - name: ka-lite-config-ubislate-7c
+    directory: ka-lite-config-ubislate-7c
+    upstream: learningequality
+    remotes: []
+
+  - name: ansible-playbooks
+    directory: ansible-playbooks
+    upstream: fle-internal
+    remotes:
+      - aronasorman
+
+  - name: fle-home
+    directory: fle-home
+    upstream: fle-internal
+    remotes:
+      - dylanjbarth
+      - aronasorman
+
+  - name: kalite-ubuntu-image
+    directory: kalite-ubuntu-image
+    upstream: fle-internal
+    remotes: []

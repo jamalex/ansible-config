@@ -8,17 +8,37 @@
   shell: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 94558F59
   changed_when: no
 
+- name: Download MIT signing key for getting Dropbox.
+  shell: apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E 
+
 - name: Add Spotify PPA.
-  shell: sh -c 'echo "deb http://repository.spotify.com stable non-free" > /etc/apt/sources.list.d/spotify.list'
-  changed_when: no
+  shell: sh -c 'echo "deb http://repository.spotify.com stable non-free" > /etc/apt/sources.list.d/spotify.list' creates=/etc/apt/sources.list.d/spotify.list
+  register: spotifyppa
+
+- name: Add Google PPA.
+  shell: sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list' creates=/etc/apt/sources.list.d/google.list
+  register: googleppa
+
+- name: Add Dropbox PPA.
+  shell: sh -c 'echo "deb http://linux.dropbox.com/ubuntu/ trusty main" > /etc/apt/sources.list.d/dropbox.list' creates=/etc/apt/sources.list.d/dropbox.list
+  register: dropboxppa
+
+- name: Update apt cache.
+  shell: apt-get update
+  when: spotifyppa.changed or googleppa.changed or dropboxppa.changed
 
 - name: Install basic packages.
-  apt: 'pkg="{{ item }}" state=installed update-cache=yes'
+  apt: 'pkg="{{ item }}" state=installed'
   with_items: basic_packages
 
 - name: Add PPAs.
   apt_repository: 'repo="{{ item }}"'
   with_items: ppas
+  register: ppas
+
+- name: Update apt cache.
+  shell: apt-get update
+  when: ppas.changed
 
 - name: Install extra packages.
   apt: 'pkg="{{ item }}" state=installed'
@@ -28,6 +48,10 @@
   pip: name={{ item }}
   with_items: python_packages
   when: python_packages is defined
+
+- name: Start Dropbox.
+  shell: dropbox start -i
+  changed_when: no
 
 - name: Enable virtualenv shortcuts.
   lineinfile: "dest=~/.bashrc state=present regexp='^. /usr/local/bin/virtualenvwrapper.sh' line='. /usr/local/bin/virtualenvwrapper.sh'"
@@ -53,13 +77,58 @@
   with_items:
     - .bashrc
     - .bash_aliases
+    - .gitconfig
   tags:
     - settings
 
+- name: Check whether Dropbox settings have been synced.
+  stat: path=~/Dropbox/Settings/sublime
+  register: check_dropbox_settings
+
+- name: Link sublime text settings from Dropbox.
+  file: path=~/.config/sublime-text-2 src=~/Dropbox/Settings/sublime state=link force=yes
+  sudo: yes
+  sudo_user: jamalex
+  when: check_dropbox_settings.stat.exists
+
 - name: Create the ~/dev directory.
-  file: dest=~/dev owner=jamalex state=directory
+  file: dest=~/dev owner=jamalex group=jamalex state=directory
 
 - name: Clone the snippets repo.
   git: repo=git@github.com:fle-internal/snippets.git dest=~/dev/snippets accept_hostkey=yes
+  sudo: yes
+  sudo_user: jamalex
+
+- name: Clone the FLE project repos.
+  git: repo=git@github.com:jamalex/{{ item.name }}.git dest=~/fle/{{ item.directory }} accept_hostkey=yes force=no update=no
+  with_items: fle_projects
+  tags: projects
+  sudo: yes
+  sudo_user: jamalex
+
+- name: Add upstream remote to FLE projects.
+  shell: git remote add upstream git@github.com:{{ item.upstream }}/{{ item.name }}.git -f || true chdir=~/fle/{{ item.directory }}
+  register: add_upstream
+  changed_when: '"already exists" not in add_upstream.stderr'
+  with_items: fle_projects
+  tags: projects
+  sudo: yes
+  sudo_user: jamalex
+
+- name: Add other remotes to FLE projects.
+  shell: git remote add {{ item.1 }} https://github.com/{{ item.1 }}/{{ item.0.name }}.git -f || true chdir=~/fle/{{ item.0.directory }}
+  register: add_remotes
+  changed_when: '"already exists" not in add_remotes.stderr'
+  with_subelements:
+    - fle_projects
+    - remotes
+  tags: projects
+  sudo: yes
+  sudo_user: jamalex
+
+- name: Set up sublime project files for FLE projects.
+  template: src=skeleton.sublime-project.j2 dest=~/fle/{{ item.directory }}.sublime-project
+  with_items: fle_projects
+  tags: projects
   sudo: yes
   sudo_user: jamalex

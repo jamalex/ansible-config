@@ -1,0 +1,25 @@
+{
+    "folders":
+    [
+        {
+            {% if item.folder_exclude_patterns is defined %}
+            "folder_exclude_patterns": {{ item.folder_exclude_patterns|to_json }},
+            {% endif %}
+            {% if item.file_exclude_patterns is defined %}
+            "file_exclude_patterns": {{ item.file_exclude_patterns|to_json }},
+            {% endif %}
+            "path": "{{ item.directory }}"
+        }
+    ],
+    "settings":
+    {
+
+    },
+    "build_systems":
+    [
+        {
+            "name": "List",
+            "cmd": ["ls"]
+        }
+    ]
+}
