@@ -9,7 +9,8 @@
   changed_when: no
 
 - name: Download MIT signing key for getting Dropbox.
-  shell: apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E 
+  shell: apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
+  changed_when: no
 
 - name: Add Spotify PPA.
   shell: sh -c 'echo "deb http://repository.spotify.com stable non-free" > /etc/apt/sources.list.d/spotify.list' creates=/etc/apt/sources.list.d/spotify.list
