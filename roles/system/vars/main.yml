@@ -15,11 +15,12 @@ ppas:
   - "ppa:tycho-s/ppa"
 
 extra_packages:
+  - htop
   - dropbox
   - qtile
   - firefox
   - sublime-text
-  - libreoffice
+  # - libreoffice
   - python-gpgme
   - python-requests
   - google-chrome-stable
@@ -28,7 +29,7 @@ extra_packages:
   - compizconfig-settings-manager
   # - software-center # added annoying keyring
   - spotify-client
-  - ipython
+  # - ipython
   # - compiz-plugins
   - git
   - git-gui
@@ -51,6 +52,7 @@ extra_packages:
 python_packages:
   - virtualenv
   - virtualenvwrapper
+  - ipython==0.11
 
 rackspace_hosts:
   - gatehouse
