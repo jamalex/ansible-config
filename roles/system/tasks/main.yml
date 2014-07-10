@@ -12,13 +12,13 @@
   shell: apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
   changed_when: no
 
-- name: Add Spotify PPA.
-  shell: sh -c 'echo "deb http://repository.spotify.com stable non-free" > /etc/apt/sources.list.d/spotify.list' creates=/etc/apt/sources.list.d/spotify.list
-  register: spotifyppa
+# - name: Add Spotify PPA.
+#   shell: sh -c 'echo "deb http://repository.spotify.com stable non-free" > /etc/apt/sources.list.d/spotify.list' creates=/etc/apt/sources.list.d/spotify.list
+#   register: spotifyppa
 
-- name: Add Google PPA.
-  shell: sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list' creates=/etc/apt/sources.list.d/google.list
-  register: googleppa
+# - name: Add Google PPA.
+#   shell: sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list' creates=/etc/apt/sources.list.d/google.list
+#   register: googleppa
 
 - name: Add Dropbox PPA.
   shell: sh -c 'echo "deb http://linux.dropbox.com/ubuntu/ trusty main" > /etc/apt/sources.list.d/dropbox.list' creates=/etc/apt/sources.list.d/dropbox.list
@@ -26,11 +26,15 @@
 
 - name: Update apt cache.
   shell: apt-get update
-  when: spotifyppa.changed or googleppa.changed or dropboxppa.changed
+  when: dropboxppa.changed # or spotifyppa.changed or googleppa.changed
 
 - name: Install basic packages.
   apt: 'pkg="{{ item }}" state=installed'
   with_items: basic_packages
+
+- name: Uninstall undesired packages.
+  apt: 'pkg="{{ item }}" state=absent'
+  with_items: unwanted_packages
 
 - name: Add PPAs.
   apt_repository: 'repo="{{ item }}"'
@@ -131,5 +135,10 @@
   template: src=skeleton.sublime-project.j2 dest=~/fle/{{ item.directory }}.sublime-project
   with_items: fle_projects
   tags: projects
+  sudo: yes
+  sudo_user: jamalex
+
+- name: Clone thisCourse Django project.
+  git: repo=git@thiscourse.unfuddle.com:thiscourse/tcgit.git dest=~/dev/thisCourse accept_hostkey=yes force=no update=no
   sudo: yes
   sudo_user: jamalex

@@ -7,12 +7,15 @@ basic_packages:
   - curl
   - python-pip
   - python-dev
+  - libxml2-dev
+  - libxslt1-dev
   - ubuntu-standard
   - unzip
 
 ppas:
   - "ppa:webupd8team/sublime-text-2"
   - "ppa:tycho-s/ppa"
+  - "ppa:fkrull/deadsnakes"
 
 extra_packages:
   - htop
@@ -48,6 +51,15 @@ extra_packages:
   - ubuntu-restricted-extras
   - ttf-ubuntu-font-family
   - synaptic
+  - python2.5
+  - python2.5-dev
+  - python2.6
+  - python2.6-dev
+
+unwanted_packages:
+  - gnome-screensaver
+  - xscreensaver
+  - xscreensaver-data
 
 python_packages:
   - virtualenv

@@ -18,3 +18,5 @@ sudo -u jamalex git clone git@github.com:jamalex/ansible-config.git
 
 cd ansible-config
 ansible-playbook -i hosts system.yml
+
+chown jamalex:jamalex -R /home/jamalex/.ansible
