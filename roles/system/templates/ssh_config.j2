@@ -4,3 +4,11 @@ Host {{ host }}
     Port 4242
 
 {% endfor %}
+
+{% for host in ssh_hosts %}
+Host {{ host.name }}
+    HostName {{ host.domain }}
+    Port {{ host.port }}
+
+{% endfor %}
+

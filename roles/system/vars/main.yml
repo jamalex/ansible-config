@@ -82,6 +82,14 @@ rackspace_hosts:
   - globe
   - troy
 
+ssh_hosts:
+  - name: eslgenie
+    domain: eslgenie.com
+    port: 4242
+  - name: thiscourse
+    domain: thiscourse.com
+    port: 4242
+
 accept_hostkey: yes
 
 fle_projects:
