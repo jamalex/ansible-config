@@ -19,7 +19,7 @@ ppas:
 
 extra_packages:
   - htop
-  - dropbox
+  # - dropbox
   - qtile
   - firefox
   - sublime-text
@@ -55,6 +55,10 @@ extra_packages:
   - python2.5-dev
   - python2.6
   - python2.6-dev
+  - nodejs
+  - nodejs-legacy
+  - npm
+  - devscripts
 
 unwanted_packages:
   - gnome-screensaver
