@@ -116,3 +116,6 @@ fi
 . /usr/local/bin/virtualenvwrapper.sh
 
 PATH=$PATH:~/dev/snippets/git-commands
+
+# added by travis gem
+[ -f /home/jamalex/.travis/travis.sh ] && source /home/jamalex/.travis/travis.sh
