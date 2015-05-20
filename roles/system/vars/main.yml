@@ -14,13 +14,13 @@ basic_packages:
 
 ppas:
   - "ppa:webupd8team/sublime-text-2"
-  - "ppa:tycho-s/ppa"
+  # - "ppa:tycho-s/ppa"
   - "ppa:fkrull/deadsnakes"
 
 extra_packages:
   - htop
   # - dropbox
-  - qtile
+  # - qtile
   - firefox
   - sublime-text
   # - libreoffice
@@ -33,7 +33,7 @@ extra_packages:
   # - software-center # added annoying keyring
   - spotify-client
   # - ipython
-  # - compiz-plugins
+  - compiz-plugins
   - git
   - git-gui
   - icedtea-7-plugin
@@ -81,6 +81,7 @@ rackspace_hosts:
   - kitchen
   - globe
   - troy
+  - pantry
 
 ssh_hosts:
   - name: eslgenie
@@ -99,8 +100,8 @@ fle_projects:
     upstream: learningequality
     remotes:
       - aronasorman
-      - dylanjbarth
       - rtibbles
+      - benjaoming
     folder_exclude_patterns:
       - kalite/static
 
@@ -109,8 +110,9 @@ fle_projects:
     upstream: learningequality
     remotes:
       - aronasorman
-      - dylanjbarth
       - rtibbles
+      - benjaoming
+      - mcgallaspy
     folder_exclude_patterns:
       - kalite/static
 
@@ -119,8 +121,9 @@ fle_projects:
     upstream: learningequality
     remotes:
       - aronasorman
-      - dylanjbarth
       - rtibbles
+      - benjaoming
+      - mcgallaspy
     folder_exclude_patterns:
       - kalite/static
 
@@ -129,8 +132,9 @@ fle_projects:
     upstream: fle-internal
     remotes:
       - aronasorman
-      - dylanjbarth
       - rtibbles
+      - benjaoming
+      - mcgallaspy
 
   - name: ka-lite-hotspot
     directory: ka-lite-hotspot
@@ -163,13 +167,14 @@ fle_projects:
     upstream: fle-internal
     remotes:
       - aronasorman
+      - mcgallaspy
 
   - name: fle-home
     directory: fle-home
     upstream: fle-internal
     remotes:
-      - dylanjbarth
       - aronasorman
+      - mcgallaspy
 
   - name: kalite-ubuntu-image
     directory: kalite-ubuntu-image
